@@ -142,6 +142,17 @@ class AGI_AsteriskManager
 	{
 		return 'asManager(evt:' . count($this->events_queue) . ',rsp:' . count($this->responses).'): ';
 	}
+
+	/**
+	 * Returns current count of events and responses in heaps
+	 *
+	 * @return string current status
+	 */
+	public function dump()
+	{
+		return 'asManager (evt:' . count($this->events_queue) . ',rsp:' . count($this->responses).') ';
+	}
+
 	/**
 	 * Constructor
 	 *
