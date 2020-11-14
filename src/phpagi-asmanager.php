@@ -128,6 +128,18 @@ class AGI_AsteriskManager
 	 */
 	private $events_queue = array();
 
+	/**
+	 * Количество обнаруженных событий
+	 * нужно для того, чтобы вместе с событием передавать его номер,
+	 * т.к. события переданные по http, и обрабатываемые системой получателем могут приниматься не в
+	 * том порядке, в котором были отправлены (jitter)
+	 * @var integer
+	 */
+	private $events_count=0;
+
+	/**
+	 * @param $agi
+	 */
 	public function setPagi(&$agi)
 	{
 		$this->pagi = $agi;
@@ -263,7 +275,9 @@ class AGI_AsteriskManager
 		// process response
 		switch ($type) {
 			case 'event':
-				array_push($this->events_queue, $parameters);
+				$parameters['uid']=$this->events_count++;
+				if ($this->events_count>=PHP_INT_MAX) $this->events_count=0;
+				if (isset($this->event_handlers[$parameters['Event']])) array_push($this->events_queue, $parameters);
 				$this->log("Event queued: " . print_r($parameters, true), EVENTS_LOG_LEVEL);
 				break;
 			case 'response':
