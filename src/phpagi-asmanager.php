@@ -277,7 +277,7 @@ class AGI_AsteriskManager
 			case 'event':
 				$parameters['uid']=$this->events_count++;
 				if ($this->events_count>=PHP_INT_MAX) $this->events_count=0;
-				if (isset($this->event_handlers[$parameters['Event']])) array_push($this->events_queue, $parameters);
+				array_push($this->events_queue, $parameters);
 				$this->log("Event queued: " . print_r($parameters, true), EVENTS_LOG_LEVEL);
 				break;
 			case 'response':
