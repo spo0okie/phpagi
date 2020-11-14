@@ -276,7 +276,7 @@ class AGI_AsteriskManager
 		switch ($type) {
 			case 'event':
 				$parameters['uid']=$this->events_count++;
-				if ($this->events_count>=PHP_INT_MAX) $this->events_count=0;
+				if ($this->events_count>=PHP_INT_MAX/2) $this->events_count=0;
 				array_push($this->events_queue, $parameters);
 				$this->log("Event queued: " . print_r($parameters, true), EVENTS_LOG_LEVEL);
 				break;
